@@ -1,0 +1,229 @@
+MainActivity.java
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
+
+public class MainActivity extends AppCompatActivity {
+
+    EditText e1,e2;
+    Button bt;
+    Spinner s;
+
+    String[] dept = {"CSE","ISE","ECE","EEE"};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        e1 = (EditText) findViewById(R.id.editText);
+        e2 = (EditText) findViewById(R.id.editText2);
+
+        bt = (Button) findViewById(R.id.button);
+        s = (Spinner) findViewById(R.id.spinner);
+
+        ArrayAdapter adapter = new ArrayAdapter(MainActivity.this,android.R.layout.simple_spinner_item,dept);
+        s.setAdapter(adapter);
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this,Main2Activity.class);
+
+                i.putExtra("name",e1.getText().toString());
+                i.putExtra("usn",e2.getText().toString());
+                i.putExtra("dept",s.getSelectedItem().toString());
+
+                startActivity(i);
+
+            }
+        });
+    }
+}
+-------------------------------------------------------------------
+Main2Activity.java
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+
+import android.content.Intent;
+
+import android.os.Bundle;
+import android.widget.TextView;
+
+public class Main2Activity extends AppCompatActivity {
+
+    TextView t1,t2,t3;
+
+    String name,reg,dept;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        t1= (TextView) findViewById(R.id.textView1);
+        t2= (TextView) findViewById(R.id.textView2);
+        t3= (TextView) findViewById(R.id.textView3);
+
+        Intent i = getIntent();
+
+
+        name = i.getStringExtra("name");
+        reg = i.getStringExtra("usn");
+        dept = i.getStringExtra("dept");
+
+
+        t1.setText(name);
+        t2.setText(reg);
+        t3.setText(dept);
+
+    }
+}
+
+---------------------------------------------------------------
+activity_main.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="Details"
+        android:textSize="25sp"
+        android:gravity="center"/>
+
+    <GridLayout
+        android:id="@+id/gridLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="200dp"
+        android:columnCount="2"
+        android:rowCount="3">
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="0"
+            android:layout_column="0"
+            android:text="Name"
+            android:textSize="20sp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:ems="10"/>
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:text="Reg.No"
+            android:textSize="20sp"
+            android:gravity="center"/>
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:inputType="number"
+            android:ems="10"/>
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="Dept"
+            android:textSize="20sp"
+            android:gravity="center"/>
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:spinnerMode="dropdown"/>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="150dp"
+            android:text="Submit"/>
+
+    </GridLayout>
+
+</LinearLayout>
+
+-----------------------------------------------------------------------
+activity_main2.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Main2Activity">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="New Text"
+        android:textSize="30sp"/>
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="New Text"
+        android:textSize="30sp"/>
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="New Text"
+        android:textSize="30sp"/>
+</LinearLayout>
+---------------------------------------------------------------------
+
+
