@@ -1,0 +1,127 @@
+java 
+
+package com.example.myquiz;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Toast;
+
+public class Main6Activity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main6);
+        final SharedPreferences sh = getSharedPreferences("QuizStatus", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor myEdit = sh.edit();
+        final RadioGroup choice = (RadioGroup)findViewById(R.id.choice);
+        Button b =(Button)findViewById(R.id.button);
+
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int c=choice.getCheckedRadioButtonId();
+                RadioButton r=(RadioButton)findViewById(c);
+                if (r.getText().equals("Yes")){
+                    myEdit.putInt("Quiz Status",1);
+                    myEdit.apply();
+                    Toast.makeText(Main6Activity.this, "Quiz is now active", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    myEdit.putInt("Quiz Status",0);
+                    myEdit.commit();
+                    Toast.makeText(Main6Activity.this, "Quiz is now closed", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+    }
+}
+
+
+xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Main6Activity">
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="135dp"
+            android:layout_marginTop="30dp"
+            android:text="Quiz App"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginRight="50dp"
+            android:text="Do you want to enable the quiz?"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#BCB2B2"
+        android:id="@+id/choice">
+
+        <RadioButton
+            android:id="@+id/yes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:text="Yes"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:text="No"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="100dp"
+            android:text="Set"
+            android:id="@+id/button"
+            android:textSize="24sp"/>
+
+    </RadioGroup>
+
+</LinearLayout>
+
+-----------------------------------
+
+in your my myquiz.zip,
+this page is Main6activity.java and activity_main6.xml
+
+
