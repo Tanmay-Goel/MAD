@@ -1,0 +1,103 @@
+java
+
+package com.example.myapplication;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.DatePicker;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+
+    DatePicker simpleDatePicker;
+    Button submit;
+    EditText e;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        // initiate the date picker and a button
+        simpleDatePicker = (DatePicker) findViewById(R.id.simpleDatePicker);
+        submit = (Button) findViewById(R.id.submitButton);
+        e=(EditText) findViewById(R.id.editText);
+        SharedPreferences mySharedPref=getSharedPreferences("myData", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor=mySharedPref.edit();
+        // perform click event on submit button
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get the values for day of month , month and year from a date picker
+                String day = "Day = " + simpleDatePicker.getDayOfMonth();
+                String month = "Month = " + (simpleDatePicker.getMonth() + 1);
+                String year = "Year = " + simpleDatePicker.getYear();
+                String time=e.getText().toString();
+                editor.putString("Day",day);
+                editor.putString("Month",month);
+                editor.putString("Year",year);
+                editor.putString("Time",time);
+                editor.commit();
+                // display the values by using a toast
+                Toast.makeText(getApplicationContext(), "Quiz Scheduled for "+day + "\t" + month + "\t" + year + "\n" + time + "hours", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+
+}
+---------------------------------------------
+xml
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity">
+
+    <DatePicker
+        android:id="@+id/simpleDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#150"
+        android:datePickerMode="spinner" />
+
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="450dp"
+        android:layout_marginTop="350dp"
+        android:layout_marginEnd="450dp"
+        android:layout_marginRight="450dp"
+        android:layout_marginBottom="450dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="hh:mm:ss" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/simpleDatePicker"
+        android:layout_marginTop="152dp"
+        android:background="#150"
+        android:text="SUBMIT"
+        android:textColor="#fff"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+</RelativeLayout>
+-----------------------------------------------------------------------------------------
