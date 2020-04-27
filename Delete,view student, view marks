@@ -1,0 +1,30 @@
+ //delete student
+    public void DeleteRecord(int usn){
+    db=getWritableDatabase();
+    String query="SELECT * FROM " + TABLE + "WHERE USN =" +usn;
+    Cursor c=db.rawQuery(query,null);
+        if(c.getCount()>=0){
+            //intetnt and move to next page -- login successful
+            String query2="DELETE from "+ TABLE+"USN = "+usn;
+            db.execSQL(query2);
+        }
+        else{
+            //invalid login
+            Toast.makeText(DeleteQuestions.class, "Invalid USN", Toast.LENGTH_SHORT).show();
+        }
+    
+    }
+    
+    //view students
+    
+    public void ViewStudentS(){
+    db=getReadableDatabase();
+    db.execSQL("SELECT * from "+ TABLE);
+    }
+    
+    // view marks
+    
+    public void ViewMarks(){
+        db=getReadableDatabase();
+        db.execSQL("SELECT NAME, Marks from "+ TABLE +" ORDER By USN");
+    }
